@@ -1,9 +1,13 @@
 package main
 
-import "github.com/QuentinN42/autocommits/pkg/svc"
+import (
+	"context"
+
+	"github.com/QuentinN42/autocommits/pkg/svc"
+)
 
 func main() {
-	svc := svc.New()
-
-	svc.Run()
+	ctx := context.Background()
+	svc := svc.New(ctx)
+	svc.Run(ctx)
 }
