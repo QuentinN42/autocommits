@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"cloud.google.com/go/civil"
 	"github.com/QuentinN42/autocommits/pkg/logger"
@@ -51,11 +52,25 @@ func parseModel(ctx context.Context, mod ResponseModel) []types.Todo {
 	return result
 }
 
+type Gitlab struct {
+	username string
+}
+
+func New(ctx context.Context) (*Gitlab, error) {
+	username := os.Getenv("GL_USER")
+	if username == "" {
+		return nil, fmt.Errorf("GL_USER is not set")
+	}
+	return &Gitlab{
+		username: username,
+	}, nil
+}
+
 // Fetches commits from GitLab
 //
 // https://gitlab.com/users/[username]/calendar.json
-func GetCommits(ctx context.Context, username string) ([]types.Todo, error) {
-	url := "https://gitlab.com/users/" + username + "/calendar.json"
+func (g *Gitlab) GetCommits(ctx context.Context) ([]types.Todo, error) {
+	url := "https://gitlab.com/users/" + g.username + "/calendar.json"
 
 	model, err := getModel(ctx, url)
 	if err != nil {

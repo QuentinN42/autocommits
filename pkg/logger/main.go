@@ -41,7 +41,7 @@ func replaceAttr(groups []string, a slog.Attr) slog.Attr {
 	case level < LevelInfo:
 		a.Value = slog.StringValue("DEBUG")
 	case level < LevelWarning:
-		a.Value = slog.StringValue("NOTICE")
+		a.Value = slog.StringValue("INFO")
 	case level < LevelError:
 		a.Value = slog.StringValue("WARNING")
 	case level < LevelFatal:
