@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 
 	"cloud.google.com/go/civil"
 	"github.com/QuentinN42/autocommits/pkg/logger"
@@ -44,8 +45,8 @@ func parseModel(ctx context.Context, mod ResponseModel) []types.Todo {
 		}
 		for i := 0; i < v; i++ {
 			result = append(result, types.Todo{
-				ID:   fmt.Sprintf("%s-%d", k, i),
-				Date: date,
+				ID:   fmt.Sprintf("%s-%d", k, i+1),
+				Date: time.Date(date.Year, time.Month(date.Month), date.Day, 0, 0, 0, 0, time.UTC),
 			})
 		}
 	}

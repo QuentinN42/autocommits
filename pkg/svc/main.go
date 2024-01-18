@@ -2,10 +2,12 @@ package svc
 
 import (
 	"context"
+	"time"
 
 	"github.com/QuentinN42/autocommits/pkg/github"
 	"github.com/QuentinN42/autocommits/pkg/gitlab"
 	"github.com/QuentinN42/autocommits/pkg/logger"
+	"github.com/QuentinN42/autocommits/pkg/types"
 )
 
 type Service struct {
@@ -35,8 +37,12 @@ func (s *Service) Run(ctx context.Context) error {
 		return err
 	}
 
-	for _, todo := range todos {
-		s.gh.Work(ctx, todo)
+	todos = []types.Todo{
+		{
+			ID:   "2024-01-17-42",
+			Date: time.Date(2024, 1, 17, 0, 0, 0, 0, time.UTC),
+		},
 	}
-	return nil
+
+	return s.gh.WorkAll(ctx, todos)
 }

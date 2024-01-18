@@ -1,10 +1,8 @@
 package types
 
-import (
-	"cloud.google.com/go/civil"
-)
+import "time"
 
 type Todo struct {
 	ID   string
-	Date civil.Date
+	Date time.Time
 }
